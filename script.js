@@ -35,4 +35,20 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.fade-in').forEach(function (elemento) {
         observadorFade.observe(elemento);
     });
+
+    const linksNav = document.querySelectorAll('.nav-link');
+    const observadorSecoes = new IntersectionObserver(function (entradas) {
+        entradas.forEach(function (entrada) {
+            if (entrada.isIntersecting) {
+                const id = entrada.target.getAttribute('id');
+                linksNav.forEach(function (link) {
+                    link.classList.toggle('ativo', link.getAttribute('href') === '#' + id);
+                });
+            }
+        });
+    }, { rootMargin: '-50% 0px -50% 0px' });
+
+    document.querySelectorAll('section[id]').forEach(function (secao) {
+        observadorSecoes.observe(secao);
+    });
 });
